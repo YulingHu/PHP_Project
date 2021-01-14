@@ -1,8 +1,8 @@
 <html>
 
 	<head>
-		<link rel="stylesheet" href="index.css" type="text/css" />
-		<script type="text/javascript" src="index.js"></script>
+		<link rel="stylesheet" href="/index.css" type="text/css" />
+		<script type="text/javascript" src="/index.js"></script>
 		<title>Sales Dashboard</title>
 	</head>
 
@@ -13,55 +13,56 @@
 				<main role="main">
 					<section>
 						<h2>Statistics</h2>
-						<div>
-							<ul>
+						<div class="subsection">
+							<h3>Overview</h3>
+							<ul class="statictics-list">
 								<li>
 									<div>
-										<div>300.00 <span>CAD</span></div>
-										<div>Total Sales</div>
+										<div><span class="statistics-large">300.00</span><span class="statistics-small">CAD</span></div>
+										<div class="statistics-caption">Total Sales</div>
 									</div>
 								</li>
 								<li>
 									<div>
-										<div>200.00 <span>CAD</span></div>
-										<div>Total Tax</div>
+										<div><span class="statistics-large">200.00</span><span class="statistics-small">CAD</span></div>
+										<div class="statistics-caption">Total Tax</div>
 									</div>
 								</li>
 								<li>
 									<div>
-										<div>100.00 <span>CAD</span></div>
-										<div>Total Shipping</div>
+										<div><span class="statistics-large">100.00</span><span class="statistics-small">CAD</span></div>
+										<div class="statistics-caption">Total Shipping</div>
 									</div>
 								</li>
 							</ul>
 						</div>
-						<div>
-							<h3>Top Locations by Sales</h3>
-							<ol>
+						<div class="subsection">
+							<h3>Top Locations</h3>
+							<ol class="statictics-list">
 								<li>
-									<div>Toronto <span>Canada</span></div>
-									<div>100.00 <span>CAD</span></div>
+									<div class="statistics-large">Toronto</div>
+									<div class="statistics-caption">300.00 CAD</div>
 								</li>
 								<li>
-									<div>Brandon <span>Canada</span></div>
-									<div>100.00 <span>CAD</span></div>
+									<div class="statistics-large">Brandon</div>
+									<div class="statistics-caption">200.00 CAD</div>
 								</li>
 								<li>
-									<div>Oakville <span>Canada</span></div>
-									<div>100.00 <span>CAD</span></div>
+									<div class="statistics-large">Oakville</div>
+									<div class="statistics-caption">100.00 CAD</div>
 								</li>
 							</ol>
 						</div>
 					</section>
 					<section>
 						<h2>Charts</h2>
-						<div>
+						<div class="subsection">
 							<h3>Sales over Time</h3>
 						</div>
-						<div>
+						<div class="subsection">
 							<h3>Sales by Location</h3>
 						</div>
-						<div>
+						<div class="subsection">
 							<h3>Sales by Customer</h3>
 						</div>
 					</section>
