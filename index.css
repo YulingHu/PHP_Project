@@ -1,0 +1,14 @@
+html {
+	font-family: "Myriad", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+body {
+	margin: 0;
+}
+.outer-margin {
+	margin: 0 auto;
+	max-width: 1040px;
+}
+
+.inner-margin {
+	margin: 20px;
+}
