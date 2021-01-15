@@ -1,6 +1,9 @@
 <html>
 
 	<head>
+		<link rel="stylesheet" href="/vendors/chartist/chartist.min.css">
+		<script src="/vendors/chartist/chartist.min.js"></script>
+		<script src="/vendors/moment/moment.min.js"></script>
 		<link rel="stylesheet" href="/index.css" type="text/css" />
 		<script type="text/javascript" src="/index.js"></script>
 		<title>Sales Dashboard</title>
@@ -17,39 +20,39 @@
 							<h3>Overview</h3>
 							<ul class="statictics-list">
 								<li>
-									<div>
-										<div><span class="statistics-large">300.00</span><span class="statistics-small">CAD</span></div>
-										<div class="statistics-caption">Total Sales</div>
+									<div id="total-sales">
+										<div><span class="statistics-large">&hellip;</span><span class="statistics-small"></span></div>
+										<div class="statistics-caption">&hellip;</div>
 									</div>
 								</li>
 								<li>
-									<div>
-										<div><span class="statistics-large">200.00</span><span class="statistics-small">CAD</span></div>
-										<div class="statistics-caption">Total Tax</div>
+									<div id="total-tax">
+										<div><span class="statistics-large">&hellip;</span><span class="statistics-small"></span></div>
+										<div class="statistics-caption">&hellip;</div>
 									</div>
 								</li>
 								<li>
-									<div>
-										<div><span class="statistics-large">100.00</span><span class="statistics-small">CAD</span></div>
-										<div class="statistics-caption">Total Shipping</div>
+									<div id="total-shipping">
+										<div><span class="statistics-large">&hellip;</span><span class="statistics-small"></span></div>
+										<div class="statistics-caption">&hellip;</div>
 									</div>
 								</li>
 							</ul>
 						</div>
 						<div class="subsection">
 							<h3>Top Locations</h3>
-							<ol class="statictics-list">
+							<ol class="statictics-list" id="top-locations">
 								<li>
-									<div class="statistics-large">Toronto</div>
-									<div class="statistics-caption">300.00 CAD</div>
+									<div class="statistics-large">&hellip;</div>
+									<div class="statistics-caption">&hellip;</div>
 								</li>
 								<li>
-									<div class="statistics-large">Brandon</div>
-									<div class="statistics-caption">200.00 CAD</div>
+									<div class="statistics-large">&hellip;</div>
+									<div class="statistics-caption">&hellip;</div>
 								</li>
 								<li>
-									<div class="statistics-large">Oakville</div>
-									<div class="statistics-caption">100.00 CAD</div>
+									<div class="statistics-large">&hellip;</div>
+									<div class="statistics-caption">&hellip;</div>
 								</li>
 							</ol>
 						</div>
@@ -58,18 +61,27 @@
 						<h2>Charts</h2>
 						<div class="subsection">
 							<h3>Sales over Time</h3>
+							<div class="chart" id="chart-sales-over-time">
+								<div class="chart-placeholder">&hellip;</div>
+							</div>
 						</div>
 						<div class="subsection">
 							<h3>Sales by Location</h3>
+							<div class="chart" id="chart-sales-by-location">
+								<div class="chart-placeholder">&hellip;</div>
+							</div>
 						</div>
 						<div class="subsection">
 							<h3>Sales by Customer</h3>
+							<div class="chart" id="chart-sales-by-customer">
+								<div class="chart-placeholder">&hellip;</div>
+							</div>
 						</div>
 					</section>
 					<section>
 						<h2>Tables</h2>
 						<div>
-							<table>
+							<table id="table">
 								<thead>
 									<tr>
 										<th>Order ID</th>
@@ -83,31 +95,13 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td>1365</td>
-										<td>9/13/2018</td>
-										<td>Daniel</td>
-										<td>Toronto</td>
-										<td>21.99</td>
-										<td>15</td>
-										<td>100.84</td>
-									</tr>
-									<tr>
-										<td>1364</td>
-										<td>9/12/2018</td>
-										<td>Matt</td>
-										<td>Brandon</td>
-										<td>10.63</td>
-										<td>15</td>
-										<td>58.9</td>
-									</tr>
-									<tr>
-										<td>1363</td>
-										<td>9/11/2018</td>
-										<td>Lisa</td>
-										<td>Toronto</td>
-										<td>8.01</td>
-										<td>15</td>
-										<td>64.68</td>
+										<td>&hellip;</td>
+										<td>&hellip;</td>
+										<td>&hellip;</td>
+										<td>&hellip;</td>
+										<td>&hellip;</td>
+										<td>&hellip;</td>
+										<td>&hellip;</td>
 									</tr>
 								</tbody>
 							</table>

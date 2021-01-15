@@ -55,13 +55,16 @@ main .statistics-large {
 }
 main .statistics-small {
 	font-size: 20px;
-	margin-left: 10px;
+	margin-left: 5px;
 }
 main .statistics-caption {
 	color: #808080;
 	font-size: 15px;
 	font-weight: 600;
 	text-transform: uppercase;
+}
+main .chart-placeholder {
+	font-size: 60px;
 }
 main table {
 	font-size: 15px;
