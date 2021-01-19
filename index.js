@@ -285,6 +285,9 @@
 			return (!shouldFilterYear || d.getFullYear() == parseInt(yearFilterText)) && (!shouldFilterMonth || (d.getMonth() + 1) == parseInt(monthFilterText)) && (!shouldFilterFirstName || resultEntry.firstName.toLowerCase().includes(firstNameFilterText)) && (!shouldFilterCity || resultEntry.city.toLowerCase().includes(cityFilterText) || resultEntry.province.toLowerCase().includes(cityFilterText));
 		});
 
+		const tableBodyElement = document.querySelector("#table tbody");
+		tableBodyElement.innerHTML = "";
+
 		if (filteredResult.length == 0) {
 			let tableRowElement = document.createElement("tr");
 
@@ -295,10 +298,9 @@
 			tableRowElement.appendChild(tableDataElement);
 
 			tableBodyElement.appendChild(tableRowElement);
-		}
 
-		const tableBodyElement = document.querySelector("#table tbody");
-		tableBodyElement.innerHTML = "";
+			return;
+		}
 
 		for (const resultEntry of filteredResult) {
 			let tableRowElement = document.createElement("tr");
