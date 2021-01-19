@@ -59,13 +59,13 @@ if (isset($_GET["action"])) {
                     $item = array();
                     $item["amount"] = (double) $row["total_sales"];
                     $item["currency"] = "CAD";
-					$item["city"] = $row["cust_city"];
-					$item["province"] = $row["cust_province"];
+                    $item["city"] = $row["cust_city"];
+                    $item["province"] = $row["cust_province"];
                     array_push($list, $item);
                 }
                 $result["result"] = $list;
             } else if ($_GET["attribute"] == "by-customer") {
-				$result["description"] = "Sales by Customer";
+                $result["description"] = "Sales by Customer";
 
                 $query = "SELECT SUM(grand_total) AS total_sales, cust_fname FROM sales_data GROUP BY cust_fname";
                 if (isset($_GET["sort"])) {
@@ -85,11 +85,11 @@ if (isset($_GET["action"])) {
                     $item = array();
                     $item["amount"] = (double) $row["total_sales"];
                     $item["currency"] = "CAD";
-					$item["firstName"] = $row["cust_fname"];
+                    $item["firstName"] = $row["cust_fname"];
                     array_push($list, $item);
                 }
                 $result["result"] = $list;
-			} else {
+            } else {
                 print_content("HTTP/1.1 400 Bad Request", "The attribute parameter is not recognized.");
             }
         } else {
@@ -140,7 +140,7 @@ if (isset($_GET["action"])) {
             print_content("HTTP/1.1 400 Bad Request", "The attribute parameter is missing.");
         }
     } else if ($_GET["action"] == "get-all") {
-		if (isset($_GET["attribute"])) {
+        if (isset($_GET["attribute"])) {
             if ($_GET["attribute"] == "over-time") {
                 $result["description"] = "Sales over Time";
 
@@ -149,11 +149,11 @@ if (isset($_GET["action"])) {
 
                 $list = array();
                 foreach ($rows->fetchAll() as $row) {
-					$item = array();
-					$item["date"] = $row["purchase_date"];
-					$item["sales"] = (double) $row["total_sales"];
-					$item["tax"] = (double) $row["total_tax"];
-					$item["shipping"] = (double) $row["total_shipping"];
+                    $item = array();
+                    $item["date"] = $row["purchase_date"];
+                    $item["sales"] = (double) $row["total_sales"];
+                    $item["tax"] = (double) $row["total_tax"];
+                    $item["shipping"] = (double) $row["total_shipping"];
                     $item["currency"] = "CAD";
                     array_push($list, $item);
                 }

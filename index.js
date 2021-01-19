@@ -1,7 +1,29 @@
 (function () {
 	"use strict";
 
+	const numericPattern = /^\d+$/;
+	const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+
+	let salesOverTimeResult = [];
+	let tableResult = [];
+
 	window.addEventListener("load", updateData, false);
+	window.addEventListener("load", function () {
+		document.getElementById("over-time-chart-from-date-text-field").addEventListener("change", overTimeChartFilterTextDidChange, false);
+		document.getElementById("over-time-chart-to-date-text-field").addEventListener("change", overTimeChartFilterTextDidChange, false);
+	}, false);
+	window.addEventListener("load", function () {
+		document.getElementById("by-location-chart-top-number-text-field").addEventListener("change", byLocationChartFilterTextDidChange, false);
+	}, false);
+	window.addEventListener("load", function () {
+		document.getElementById("by-customer-chart-top-number-text-field").addEventListener("change", byCustomerChartFilterTextDidChange, false);
+	}, false);
+	window.addEventListener("load", function () {
+		document.getElementById("table-year-text-field").addEventListener("input", tableFilterTextDidChange, false);
+		document.getElementById("table-month-text-field").addEventListener("input", tableFilterTextDidChange, false);
+		document.getElementById("table-first-name-text-field").addEventListener("input", tableFilterTextDidChange, false);
+		document.getElementById("table-city-text-field").addEventListener("input", tableFilterTextDidChange, false);
+	}, false);
 
 	function updateData() {
 		fetchTotalSales();
@@ -35,11 +57,13 @@
 	}
 
 	function fetchSalesByLocation() {
-		fetchData("/service/?action=get-sales&attribute=by-location&sort=desc", updateSalesByLocation);
+		const limitNumber = parseInt(document.querySelector("#by-location-chart-top-number-text-field").value.trim());
+		fetchData(`/service/?action=get-sales&attribute=by-location&sort=desc&limit=${limitNumber}`, updateSalesByLocation);
 	}
 
 	function fetchSalesByCustomer() {
-		fetchData("/service/?action=get-sales&&attribute=by-customer&sort=desc", updateSalesByCustomer);
+		const limitNumber = parseInt(document.querySelector("#by-customer-chart-top-number-text-field").value.trim());
+		fetchData(`/service/?action=get-sales&attribute=by-customer&sort=desc&limit=${limitNumber}`, updateSalesByCustomer);
 	}
 
 	function fetchSalesTable() {
@@ -99,9 +123,43 @@
 	}
 
 	function updateSalesOverTime(response) {
-		document.querySelector("#chart-sales-over-time").innerHTML = "";
+		let result = response.result;
+		result.sort((a, b) => (new Date(a.date)) - (new Date(b.date)));
+		salesOverTimeResult = result;
+		updateSalesOverTimeFiltered();
+	}
 
-		const result = response.result;
+	function overTimeChartFilterTextDidChange() {
+		updateSalesOverTimeFiltered();
+	}
+
+	function updateSalesOverTimeFiltered() {
+		const fromDateText = document.querySelector("#over-time-chart-from-date-text-field").value.trim();
+		const toDateText = document.querySelector("#over-time-chart-to-date-text-field").value.trim();
+
+		const shouldFilterFromDate = datePattern.test(fromDateText);
+		const shouldFilterToDate = datePattern.test(toDateText);
+		
+		let filteredResult = null;
+		if (shouldFilterFromDate || shouldFilterToDate) {
+			let fromDate = null;
+			let toDate = null;
+			try {
+				fromDate = shouldFilterFromDate ? (new Date(fromDateText)) : (new Date());
+				toDate = shouldFilterToDate ? (new Date(toDateText)) : (new Date());
+			} catch (error) {
+				return;
+			}
+	
+			filteredResult = salesOverTimeResult.filter(function (resultEntry) {
+				const d = new Date(resultEntry.date);
+				return (!shouldFilterFromDate || d >= fromDate) && (!shouldFilterToDate || d <= toDate);
+			});
+		} else {
+			filteredResult = salesOverTimeResult;
+		}
+
+		document.querySelector("#chart-sales-over-time").innerHTML = "";
 
 		let data = {
 			series: [
@@ -122,14 +180,12 @@
 				type: Chartist.FixedScaleAxis,
 				divisor: 8,
 				labelInterpolationFnc: function (value) {
-					return moment(value).format('MMM D, YYYY');
+					return moment(value).format("MMM D, YYYY");
 				}
 			}
 		};
 
-		result.sort((a, b) => (new Date(a.date)) - (new Date(b.date)));
-
-		for (const resultEntry of result) {
+		for (const resultEntry of filteredResult) {
 			const d = new Date(resultEntry.date);
 			data.series[0].data.push({ x: d, y: resultEntry.sales });
 			data.series[1].data.push({ x: d, y: resultEntry.tax });
@@ -149,12 +205,12 @@
 			series: [[]]
 		};
 		let options = {
-			seriesBarDistance: 10,
-			reverseData: true,
-			horizontalBars: true,
-			axisY: {
-				offset: 80
-			}
+			// seriesBarDistance: 10,
+			// reverseData: true,
+			// horizontalBars: true,
+			// axisY: {
+			// 	offset: 80
+			// }
 		};
 
 		for (const resultEntry of result) {
@@ -162,7 +218,15 @@
 			data.series[0].push(resultEntry.amount);
 		}
 
-		new Chartist.Bar('#chart-sales-by-location', data, options);
+		new Chartist.Bar("#chart-sales-by-location", data, options);
+	}
+
+	function byLocationChartFilterTextDidChange() {
+		const topNumberText = document.querySelector("#by-location-chart-top-number-text-field").value.trim();
+		const isTopNumberValid = numericPattern.test(topNumberText) ? 1 <= parseInt(topNumberText) : false;
+		if (isTopNumberValid) {
+			fetchSalesByLocation();
+		}
 	}
 
 	function updateSalesByCustomer(response) {
@@ -175,12 +239,12 @@
 			series: [[]]
 		};
 		let options = {
-			seriesBarDistance: 10,
-			reverseData: true,
-			horizontalBars: true,
-			axisY: {
-				offset: 80
-			}
+			// seriesBarDistance: 10,
+			// reverseData: true,
+			// horizontalBars: true,
+			// axisY: {
+			// 	offset: 80
+			// }
 		};
 
 		for (const resultEntry of result) {
@@ -191,12 +255,52 @@
 		new Chartist.Bar("#chart-sales-by-customer", data, options);
 	}
 
+	function byCustomerChartFilterTextDidChange() {
+		fetchSalesByCustomer();
+	}
+
 	function updateSalesTable(response) {
+		tableResult = response.result;
+		updateSalesTableFiltered();
+	}
+
+	function tableFilterTextDidChange() {
+		updateSalesTableFiltered();
+	}
+
+	function updateSalesTableFiltered() {
+		const yearFilterText = document.querySelector("#table-year-text-field").value.trim();
+		const monthFilterText = document.querySelector("#table-month-text-field").value.trim();
+		const firstNameFilterText = document.querySelector("#table-first-name-text-field").value.trim().toLowerCase();
+		const cityFilterText = document.querySelector("#table-city-text-field").value.trim().toLowerCase();
+
+
+		const shouldFilterYear = numericPattern.test(yearFilterText) ? (2000 <= parseInt(yearFilterText) && parseInt(yearFilterText) <= 2100) : false;
+		const shouldFilterMonth = numericPattern.test(monthFilterText) ? (1 <= parseInt(monthFilterText) && parseInt(monthFilterText) <= 12) : false;
+		const shouldFilterFirstName = firstNameFilterText.length > 0;
+		const shouldFilterCity = cityFilterText.length > 0;
+
+		const filteredResult = tableResult.filter(function (resultEntry) {
+			const d = new Date(resultEntry.date);
+			return (!shouldFilterYear || d.getFullYear() == parseInt(yearFilterText)) && (!shouldFilterMonth || (d.getMonth() + 1) == parseInt(monthFilterText)) && (!shouldFilterFirstName || resultEntry.firstName.toLowerCase().includes(firstNameFilterText)) && (!shouldFilterCity || resultEntry.city.toLowerCase().includes(cityFilterText) || resultEntry.province.toLowerCase().includes(cityFilterText));
+		});
+
+		if (filteredResult.length == 0) {
+			let tableRowElement = document.createElement("tr");
+
+			let tableDataElement = document.createElement("td");
+			tableDataElement.setAttribute("colspan", "7");
+			tableDataElement.className = "empty-placeholder-cell";
+			tableDataElement.textContent = "(Empty)";
+			tableRowElement.appendChild(tableDataElement);
+
+			tableBodyElement.appendChild(tableRowElement);
+		}
+
 		const tableBodyElement = document.querySelector("#table tbody");
 		tableBodyElement.innerHTML = "";
 
-		const result = response.result;
-		for (const resultEntry of result) {
+		for (const resultEntry of filteredResult) {
 			let tableRowElement = document.createElement("tr");
 
 			let tableDataElement = document.createElement("td");
@@ -227,7 +331,7 @@
 			tableDataElement.textContent = getFormattedCurrency(resultEntry.grandTotal);
 			tableRowElement.appendChild(tableDataElement);
 
-			tableBodyElement.appendChild(tableRowElement)
+			tableBodyElement.appendChild(tableRowElement);
 		}
 	}
 

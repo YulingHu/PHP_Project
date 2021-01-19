@@ -17,9 +17,6 @@ section {
 	padding: 40px 0;
 	border-top: 1px solid #c0c0c0;
 }
-section:last-child {
-	border-bottom: none;
-}
 .subsection {
 	margin-bottom: 40px;
 }
@@ -43,7 +40,8 @@ h3 {
 	font-size: 20px;
 	margin-bottom: 10px;
 }
-ul,ol {
+ul,
+ol {
 	list-style: none;
 }
 main .statictics-list {
@@ -66,6 +64,41 @@ main .statistics-caption {
 main .chart-placeholder {
 	font-size: 60px;
 }
+main #chart-sales-over-time {
+	height: 40%;
+}
+main #chart-sales-by-location {
+	height: 40%;
+}
+main #chart-sales-by-customer {
+	height: 40%;
+}
+main .filters {
+	column-gap: 20px;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	margin-bottom: 20px;
+}
+main .filters fieldset {
+	border: none;
+}
+main .filters fieldset legend {
+	font-size: 15px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+main .filters fieldset input[type="text"] {
+	border: 1px solid #c0c0c0;
+	border-radius: 0.5em;
+	font-size: 15px;
+	padding: 0.25em 0.5em;
+	width: 100%;
+	-webkit-appearance: none;
+}
+main .filters fieldset input[type="text"]:focus {
+	border-color: #0080ff;
+	outline: none;
+}
 main table {
 	font-size: 15px;
 	width: 100%;
@@ -73,7 +106,7 @@ main table {
 main table,
 main table th,
 main table td {
-	border: 1px solid #C0C0C0;
+	border: 1px solid #c0c0c0;
 	border-collapse: collapse;
 }
 main table th,
@@ -84,6 +117,10 @@ main table tr {
 	vertical-align: top;
 }
 main table th {
-	background-color: #E0E0E0;
+	background-color: #e0e0e0;
 	font-weight: 600;
+}
+main table .empty-placeholder-cell {
+	color: #C0C0C0;
+	text-align: center;
 }
